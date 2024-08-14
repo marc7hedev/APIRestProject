@@ -5,24 +5,32 @@ class EstudiantesController{
 
     consultar(req, res){
         res.json({
-            msg: 'Consulta de estudiantes'
+            msg: 'Consulta estudiantes desde clase'
         });
     }
 
     consultarDetalle(req, res){
-
+        res.json({
+            msg: 'Consulta detalle de estudiante desde clase'
+        });
     }
 
     ingresar(req, res){
-
+        res.json({
+            msg: 'Ingresa estudiante desde clase'
+        });
     }
 
     actualizar(req, res){
-
+        res.json({
+            msg: 'Actualiza de estudiantes desde clase'
+        });
     }
 
     borrar(req, res){
-
+        res.json({
+            msg: 'Elimina estudiante desde clase'
+        });
     }
 }
 
