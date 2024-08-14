@@ -23,7 +23,7 @@ class EstudiantesController{
 
     actualizar(req, res){
         res.json({
-            msg: 'Actualiza de estudiantes desde clase'
+            msg: 'Actualiza estudiante desde clase'
         });
     }
 
