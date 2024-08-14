@@ -13,16 +13,22 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/', (req, res) => {
-    res.json({
-        msg: 'Actualización de estudiantes'
-    });
-});
+router.route("/:id")
+    .get((req, res) => {
+        res.json({
+            msg: 'Consulta de un estudiante'
+        });
+    })
+    .put((req, res) => {
+        res.json({
+            msg: 'Actualización de estudiante'
+        });
+    })
+    .delete((req, res) => {
+        res.json({
+            msg: 'Eliminado de estudiantes'
+        });
 
-router.delete('/', (req, res) => {
-    res.json({
-        msg: 'Eliminado de estudiantes'
-    });
 });
 
 module.exports = router;
