@@ -1,41 +1,41 @@
 const db = require('../database/conexion.js')
 
 
-class EstudiantesController{
+class CursosController{
     constructor(){
 
     }
 
     consultar(req, res){
         res.json({
-            msg: 'Consulta estudiantes desde clase'
+            msg: 'Consulta cursos desde clase'
         });
     }
 
     consultarDetalle(req, res){
         const { id } = req.params;
         res.json({
-            msg: `Consulta detalle estudiante desde clase con ID ${id}`
+            msg: `Consulta detalle curso desde clase con ID ${id}`
         });
     }
 
     ingresar(req, res){
         res.json({
-            msg: 'Ingresa estudiante desde clase'
+            msg: 'Ingresa curso desde clase'
         });
     }
 
     actualizar(req, res){
         res.json({
-            msg: 'Actualiza estudiante desde clase'
+            msg: 'Actualiza curso desde clase'
         });
     }
 
     borrar(req, res){
         res.json({
-            msg: 'Elimina estudiante desde clase'
+            msg: 'Elimina curso desde clase'
         });
     }
 }
 
-module.exports = new EstudiantesController();
+module.exports = new CursosController();
