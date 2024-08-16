@@ -21,6 +21,7 @@ class EstudiantesController{
 
     ingresar(req, res){
         try{
+            const { dni, nombre, apellido, email } = req.body;
             db.query(`
                     INSERT INTO estudiantes
                         (id, dni, nombre, apellido, email)
@@ -29,11 +30,10 @@ class EstudiantesController{
                         if(err){
                             res.status(400).send(err);
                         }
-                        res.status(201).json(rows);
+                        res.status(201).json({ id: rows.insertId });
                     });
         } catch(err) {
-            console.log(err);
-            res.status(500).send(err);
+            res.status(500).send(err.message);
         }
     }
 
