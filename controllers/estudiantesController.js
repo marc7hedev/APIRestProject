@@ -23,9 +23,19 @@ class EstudiantesController{
 
     consultarDetalle(req, res){
         const { id } = req.params;
-        res.json({
-            msg: `Consulta detalle estudiante desde clase con ID ${id}`
-        });
+        try{
+            db.query(`
+                SELECT * FROM estudiantes WHERE id = ?`, 
+                [id],
+                (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    res.status(200).json(rows);
+            });
+        }catch(err){
+            res.status(500).send(err.message);
+        }
     }
 
     ingresar(req, res){
