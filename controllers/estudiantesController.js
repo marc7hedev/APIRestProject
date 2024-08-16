@@ -63,7 +63,7 @@ class EstudiantesController{
         try{
             const { dni, nombre, apellido, email } = req.body;
             db.query(`
-                UPDATE apirest.estudiantes
+                UPDATE estudiantes
                 SET dni=?, nombre=?, apellido=?, email=?
                 WHERE id=?;`,
                 [dni, nombre, apellido, email, id], (err, rows) => {
@@ -81,10 +81,24 @@ class EstudiantesController{
 
 
     borrar(req, res){
-        res.json({
-            msg: 'Elimina estudiante desde clase'
-        });
+        const { id } = req.params;
+        try{
+            db.query(`
+                DELETE FROM estudiantes WHERE id=?;`,
+                [id], 
+                (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    if(rows.affectedRows == 1)
+                    res.status(201).json({ respuesta: "Registro eliminado con éxito" });
+            });
+        } catch(err) {
+            res.status(500).send(err.message);
+        }
     }
+
+
 }
 
 module.exports = new EstudiantesController();
