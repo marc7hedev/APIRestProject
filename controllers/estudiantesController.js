@@ -20,9 +20,20 @@ class EstudiantesController{
     }
 
     ingresar(req, res){
-        res.json({
-            msg: 'Ingresa estudiante desde clase'
-        });
+        try{
+            db.query(`
+                    INSERT INTO estudiantes
+                        (id, dni, nombre, apellido, email)
+                        VALUES (NULL, ?, ?, ?, ?);`,
+                    [dni, nombre, apellido, email], (err, rows) => {
+                        if(err){
+                            res.status(400).send(err);
+                        }
+                        res.status(201).json(row);
+                    });
+        } catch(err) {
+            res.status(500).send(err);
+        }
     }
 
     actualizar(req, res){
