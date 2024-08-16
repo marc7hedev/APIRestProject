@@ -31,7 +31,7 @@ class EstudiantesController{
                     if(err){
                         res.status(400).send(err);
                     }
-                    res.status(200).json(rows);
+                    res.status(200).json(rows[0]);
             });
         }catch(err){
             res.status(500).send(err.message);
