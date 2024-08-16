@@ -7,9 +7,18 @@ class EstudiantesController{
     }
 
     consultar(req, res){
-        res.json({
-            msg: 'Consulta estudiantes desde clase'
-        });
+        try{
+            db.query(`
+                SELECT * FROM estudiantes;`,
+                (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    res.status(200).json(rows);
+            });
+        }catch(err){
+            res.status(500).send(err.message);
+        }
     }
 
     consultarDetalle(req, res){
@@ -31,7 +40,7 @@ class EstudiantesController{
                             res.status(400).send(err);
                         }
                         res.status(201).json({ id: rows.insertId });
-                    });
+                });
         } catch(err) {
             res.status(500).send(err.message);
         }
