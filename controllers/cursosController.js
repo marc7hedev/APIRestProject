@@ -7,35 +7,98 @@ class CursosController{
     }
 
     consultar(req, res){
-        res.json({
-            msg: 'Consulta cursos desde clase'
-        });
+        try{
+            db.query(`
+                SELECT * FROM cursos;`,
+                (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    res.status(200).json(rows);
+            });
+        }catch(err){
+            res.status(500).send(err.message);
+        }
     }
 
     consultarDetalle(req, res){
         const { id } = req.params;
-        res.json({
-            msg: `Consulta detalle curso desde clase con ID ${id}`
-        });
+        try{
+            db.query(`
+                SELECT * FROM cursos WHERE id = ?`, 
+                [id],
+                (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    res.status(200).json(rows[0]);
+            });
+        }catch(err){
+            res.status(500).send(err.message);
+        }
     }
 
     ingresar(req, res){
-        res.json({
-            msg: 'Ingresa curso desde clase'
-        });
+        try{
+            const { dni, nombre, apellido, email } = req.body;
+            db.query(`
+                INSERT INTO cursos
+                (id, nombre, descripcion, profesor_id)
+                VALUES (NULL, ?, ?, ?);`,
+                [nombre, descripcion, profesor_id], (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    res.status(201).json({ id: rows.insertId });
+            });
+        } catch(err) {
+            res.status(500).send(err.message);
+        }
     }
+
+
 
     actualizar(req, res){
-        res.json({
-            msg: 'Actualiza curso desde clase'
-        });
+        const { id } = req.params;
+        try{
+            const { nombre, descripcion, profesor_id } = req.body;
+            db.query(`
+                UPDATE cursos
+                SET nombre=?, descripcion=?, profesor_id=?
+                WHERE id=?;`,
+                [nombre, descripcion, profesor_id], (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    if(rows.affectedRows == 1)
+                    res.status(201).json({ respuesta: "Registro actualizado con éxito" });
+            });
+        } catch(err) {
+            res.status(500).send(err.message);
+        }
     }
 
+
+
     borrar(req, res){
-        res.json({
-            msg: 'Elimina curso desde clase'
-        });
+        const { id } = req.params;
+        try{
+            db.query(`
+                DELETE FROM cursos WHERE id=?;`,
+                [id], 
+                (err, rows) => {
+                    if(err){
+                        res.status(400).send(err);
+                    }
+                    if(rows.affectedRows == 1)
+                    res.status(201).json({ respuesta: "Registro eliminado con éxito" });
+            });
+        } catch(err) {
+            res.status(500).send(err.message);
+        }
     }
+
+
 }
 
 module.exports = new CursosController();
