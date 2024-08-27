@@ -103,16 +103,16 @@ class CursosController{
 
     asociarEstudiante(req, res){
         try{
-            const { nombre, descripcion, profesor_id } = req.body;
+            const { curso_id, estudiante_id } = req.body;
             db.query(`
-                INSERT INTO cursos
-                (id, nombre, descripcion, profesor_id)
-                VALUES (NULL, ?, ?, ?);`,
-                [nombre, descripcion, profesor_id], (err, rows) => {
+                INSERT INTO cursos_estudiantes
+                (curso_id, estudiante_id)
+                VALUES (?, ?);`,
+                [curso_id, estudiante_id], (err, rows) => {
                     if(err){
                         res.status(400).send(err.message);
                     }else{
-                        res.status(201).json({ id: rows.insertId });
+                        res.status(201).json({ respuesta: 'Estudiante registrado con éxito' });
                     }
             });
         } catch(err) {
