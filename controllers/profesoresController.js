@@ -31,7 +31,8 @@ class ProfesoresController{
                     if(err){
                         res.status(400).send(err);
                     }
-                    res.status(200).json(rows[0]);
+                    if (rows.insertId)
+                        res.status(200).json(rows[0]);
             });
         }catch(err){
             res.status(500).send(err.message);
@@ -48,8 +49,9 @@ class ProfesoresController{
                 [dni, nombre, apellido, email, id, profesion, telefono], (err, rows) => {
                     if(err){
                         res.status(400).send(err);
+                    }else{
+                        res.status(201).json({ id: rows.insertId });
                     }
-                    res.status(201).json({ id: rows.insertId });
             });
         } catch(err) {
             res.status(500).send(err.message);

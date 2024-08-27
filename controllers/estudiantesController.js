@@ -48,8 +48,9 @@ class EstudiantesController{
                 [dni, nombre, apellido, email], (err, rows) => {
                     if(err){
                         res.status(400).send(err);
+                    }else{
+                        res.status(201).json({ id: rows.insertId });
                     }
-                    res.status(201).json({ id: rows.insertId });
             });
         } catch(err) {
             res.status(500).send(err.message);

@@ -21,6 +21,8 @@ class CursosController{
         }
     }
 
+
+
     consultarDetalle(req, res){
         const { id } = req.params;
         try{
@@ -40,16 +42,17 @@ class CursosController{
 
     ingresar(req, res){
         try{
-            const { dni, nombre, apellido, email } = req.body;
+            const { nombre, descripcion, profesor_id } = req.body;
             db.query(`
                 INSERT INTO cursos
                 (id, nombre, descripcion, profesor_id)
                 VALUES (NULL, ?, ?, ?);`,
                 [nombre, descripcion, profesor_id], (err, rows) => {
                     if(err){
-                        res.status(400).send(err);
+                        res.status(400).send(err.message);
+                    }else{
+                        res.status(201).json({ id: rows.insertId });
                     }
-                    res.status(201).json({ id: rows.insertId });
             });
         } catch(err) {
             res.status(500).send(err.message);
@@ -92,6 +95,25 @@ class CursosController{
                     }
                     if(rows.affectedRows == 1)
                     res.status(201).json({ respuesta: "Registro eliminado con éxito" });
+            });
+        } catch(err) {
+            res.status(500).send(err.message);
+        }
+    }
+
+    asociarEstudiante(req, res){
+        try{
+            const { nombre, descripcion, profesor_id } = req.body;
+            db.query(`
+                INSERT INTO cursos
+                (id, nombre, descripcion, profesor_id)
+                VALUES (NULL, ?, ?, ?);`,
+                [nombre, descripcion, profesor_id], (err, rows) => {
+                    if(err){
+                        res.status(400).send(err.message);
+                    }else{
+                        res.status(201).json({ id: rows.insertId });
+                    }
             });
         } catch(err) {
             res.status(500).send(err.message);
